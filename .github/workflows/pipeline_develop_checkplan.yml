@@ -58,7 +58,7 @@ jobs:
 
 
           - name: Update Lambda
-            id: Upload_Lambdas
+            id: Update_Lambdas
             run:  |
                 cd $dir
             #    aws lambda update-function-configuration --function-name $LAMDAFUNCTION -r ../config/configlambda.txt
