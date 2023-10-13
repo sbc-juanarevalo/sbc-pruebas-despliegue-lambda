@@ -68,6 +68,8 @@ jobs:
             id: Update_lambda_configuration
             run: |
                 ls
+                cd ..
+                ls                
                 cat ../config/configlambda.txt | while read -r line; do
                   if [ -n "$line" ]; then
                     aws lambda update-function-configuration --function-name JuanFelipePruebas $line
