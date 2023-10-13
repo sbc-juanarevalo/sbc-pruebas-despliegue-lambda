@@ -56,11 +56,9 @@ jobs:
                   aws s3 --region $REGION cp "$PREFIJO-${dir%?}-$POSTFIJO.zip" s3://$BUCKET
                 done
 
-
           - name: Update Lambda
-            id: Update_Lambdas
-            run:  |
+            id: Update_lambda
+            run: |
                 cd $dir
-            #    aws lambda update-function-configuration --function-name $LAMDAFUNCTION -r ../config/configlambda.txt
                 aws lambda update-function-code --function-name $LAMDAFUNCTION --s3-bucket $BUCKET --s3-key $PREFIJO-${dir%?}-$POSTFIJO.zip
 
