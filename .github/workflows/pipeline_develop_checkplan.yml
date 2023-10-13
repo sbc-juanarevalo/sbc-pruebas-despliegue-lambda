@@ -66,16 +66,13 @@ jobs:
 
           - name: Update Lambda Configuration
             id: Update_lambda_configuration
-            run: |
-                echo "$dir"
-                echo "antes"
-                ls
-                cd login
-                echo "despues"
-                ls                                
-                cat ../config/configlambda.txt | while read -r line; do
-                  if [ -n "$line" ]; then
-                    aws lambda update-function-configuration --function-name JuanFelipePruebas $line
-                  fi
+            run: |                                
+                for dir in */; do
+                cd $dir 
+                  cat config/configlambda.txt | while read -r line; do
+                    if [ -n "$line" ]; then
+                      aws lambda update-function-configuration --function-name JuanFelipePruebas $line
+                    fi
+                  done
                 done
 
