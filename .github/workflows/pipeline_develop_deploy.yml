@@ -5,9 +5,9 @@ on:
     types: [closed]
 
 env:
-  PREFIJO: sbc-autodamage-dev
-  POSTFIJO: lambda
-  BUCKET: sbc-autodamage-dev-build-lambdas-bucket
+  PREFIJO: sbc-pruebas-dev
+  POSTFIJO: deploy-lambda
+  BUCKET: bucket-pruebas-juanfelipe
   LAMBDAFUNCTION: JuanFelipePruebas
   REGION: us-east-1
     
