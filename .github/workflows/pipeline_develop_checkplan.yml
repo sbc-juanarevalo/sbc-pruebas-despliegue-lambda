@@ -56,14 +56,20 @@ jobs:
                   aws s3 --region $REGION cp "$PREFIJO-${dir%?}-$POSTFIJO.zip" s3://$BUCKET
                 done
 
-          - name: Update Lambda
+          - name: Update Lambda Code
             id: Update_lambda
             run: |                
                 for dir in */; do                
                   aws lambda update-function-code --region $REGION --function-name $LAMDAFUNCTION --s3-bucket $BUCKET --s3-key "$PREFIJO-${dir%?}-$POSTFIJO.zip"
                 done
-                cat configlambda.txt | while read -r line; do
+                
+
+          - name: Update Lambda Configuration
+            id: Update_lambda_configuration
+            run: |
+                cat ../config/configlambda.txt | while read -r line; do
                   if [ -n "$line" ]; then
                     aws lambda update-function-configuration --function-name JuanFelipePruebas $line
                   fi
                 done
+
