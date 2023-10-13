@@ -7,7 +7,7 @@ env:
   PREFIJO: sbc-pruebas-dev
   POSTFIJO: deploy-lambda
   BUCKET: bucket-pruebas-juanfelipe
-  LAMDAFUNCTION: "JuanFelipePruebas"
+  LAMBDAFUNCTION: JuanFelipePruebas
   REGION: us-east-1
 
 jobs:
@@ -65,7 +65,7 @@ jobs:
             id: Update_lambda_code_from_S3
             run: |                
                 for dir in */; do                
-                  aws lambda update-function-code --region $REGION --function-name $LAMDAFUNCTION --s3-bucket $BUCKET --s3-key "$PREFIJO-${dir%?}-$POSTFIJO.zip"
+                  aws lambda update-function-code --region $REGION --function-name $LAMBDAFUNCTION --s3-bucket $BUCKET --s3-key "$PREFIJO-${dir%?}-$POSTFIJO.zip"
                   sleep 5s
                 done
 
