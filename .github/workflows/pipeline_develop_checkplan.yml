@@ -30,14 +30,7 @@ jobs:
             run:  python3 -m pip install --user awscli
 
 
-          - name: Update Lambda Configuration
-            id: Update_lambda_configuration
-            run: |
-                  cat login/config/configlambda.txt | while read -r line; do
-                    if [ -n "$line" ]; then
-                      aws lambda update-function-configuration --region $REGION --function-name JuanFelipePruebas $line
-                    fi
-                  done
+          
                 
 
           - name: Package Lambdas to zip
@@ -73,8 +66,21 @@ jobs:
             run: |                
                 for dir in */; do                
                   aws lambda update-function-code --region $REGION --function-name $LAMDAFUNCTION --s3-bucket $BUCKET --s3-key "$PREFIJO-${dir%?}-$POSTFIJO.zip"
-                  sleep 10s
+                  sleep 5s
                 done
+
+          - name: Update Lambda Configuration
+            id: Update_lambda_configuration
+            run: |              
+                AWS_COMMAND="aws lambda update-function-configuration --function-name $LAMBDAFUNCTION"
+                while IFS= read -r line; do           
+                  if [ -n "$line" ]; then                  
+                    AWS_COMMAND="$AWS_COMMAND $line"
+                  fi
+                done < configlambda.txt            
+                echo "Ejecutando comando: $AWS_COMMAND"       
+                $AWS_COMMAND
+                      
                 
 
 
