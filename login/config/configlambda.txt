@@ -1,5 +1,5 @@
---environment Variables={NOMBRE=Felipe,APELLIDO=Peña}
---memory-size 256
---timeout 30
---description LambdaDePruebas
+--environment Variables={NOMBRE=Juan,APELLIDO=Arevalo}
+--memory-size 128
+--timeout 10
+--description Lambda2DePruebas
 ___________________________________________
