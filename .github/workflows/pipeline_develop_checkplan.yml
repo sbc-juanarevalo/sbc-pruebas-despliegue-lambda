@@ -4,9 +4,9 @@ on:
     branches: [develop]
 
 env:
-  PREFIJO: sbc-autodamage-dev
+  PREFIJO: sbc-pruebas-dev
   POSTFIJO: deploy-lambda
-  BUCKET: sbc-autodamage-dev-build-lambdas-bucket
+  BUCKET: bucket-pruebas-juanfelipe
   REGION: us-east-1
 
 jobs:
@@ -16,7 +16,7 @@ jobs:
         env:
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_DEVELOP }}
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEVELOP }}
-            REGION: ${{ secrets.REGION_DEVELOP }}
+            #REGION: ${{ secrets.REGION_DEVELOP }}
  
         steps:
           - name: Checkout Code
