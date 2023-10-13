@@ -1,0 +1,2 @@
+--environment "Variables={BUCKET=nombre,VALUE=tercero}"
+--memory-size 256

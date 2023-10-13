@@ -7,6 +7,7 @@ env:
   PREFIJO: sbc-pruebas-dev
   POSTFIJO: deploy-lambda
   BUCKET: bucket-pruebas-juanfelipe
+  LAMDAFUNCTION: JuanFelipePruebas
   REGION: us-east-1
 
 jobs:
@@ -52,8 +53,14 @@ jobs:
                   echo "----"
                   echo "$dir"
                   cd $dir
-                  aws s3 \
-                    --region $REGION \
-                    cp "$PREFIJO-${dir%?}-$POSTFIJO.zip" s3://$BUCKET
+                  aws s3 --region $REGION cp "$PREFIJO-${dir%?}-$POSTFIJO.zip" s3://$BUCKET
                 done
+
+
+          - name: Update Lambda
+            id: Upload_Lambdas
+            run:  |
+                cd $dir
+            #    aws lambda update-function-configuration --function-name $LAMDAFUNCTION -r ../config/configlambda.txt
+                aws lambda update-function-code --function-name $LAMDAFUNCTION --s3-bucket $BUCKET --s3-key $PREFIJO-${dir%?}-$POSTFIJO.zip
 
