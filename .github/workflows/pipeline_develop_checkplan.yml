@@ -7,7 +7,7 @@ env:
   PREFIJO: sbc-pruebas-dev
   POSTFIJO: deploy-lambda
   BUCKET: bucket-pruebas-juanfelipe
-  LAMDAFUNCTION: JuanFelipePruebas
+  LAMDAFUNCTION: "JuanFelipePruebas"
   REGION: us-east-1
 
 jobs:
