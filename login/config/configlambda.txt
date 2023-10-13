@@ -1,2 +1,3 @@
---environment "Variables={BUCKET=nombre,VALUE=tercero}"
---memory-size 256
+--environment "Variables={NOMBRE=juan,APELLIDO=arevalo}"
+--memory-size 128
+--timeout 20

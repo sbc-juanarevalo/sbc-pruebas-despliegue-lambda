@@ -58,10 +58,12 @@ jobs:
 
           - name: Update Lambda
             id: Update_lambda
-            run: |
-                for dir in */; do
-                  ls
-                  echo "$dir"
-                  echo "$PREFIJO-${dir%?}-$POSTFIJO.zip"
+            run: |                
+                for dir in */; do                
                   aws lambda update-function-code --region $REGION --function-name $LAMDAFUNCTION --s3-bucket $BUCKET --s3-key "$PREFIJO-${dir%?}-$POSTFIJO.zip"
+                done
+                cat configlambda.txt | while read -r line; do
+                  if [ -n "$line" ]; then
+                    aws lambda update-function-configuration --function-name JuanFelipePruebas $line
+                  fi
                 done
