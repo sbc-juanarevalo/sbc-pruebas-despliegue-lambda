@@ -71,7 +71,7 @@ jobs:
                 cd $dir 
                   cat config/configlambda.txt | while read -r line; do
                     if [ -n "$line" ]; then
-                      aws lambda update-function-configuration --function-name JuanFelipePruebas $line
+                      aws lambda update-function-configuration --region $REGION --function-name JuanFelipePruebas $line
                     fi
                   done
                 done
