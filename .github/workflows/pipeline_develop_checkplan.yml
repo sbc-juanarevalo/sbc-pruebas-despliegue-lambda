@@ -59,6 +59,9 @@ jobs:
           - name: Update Lambda
             id: Update_lambda
             run: |
-                echo "$PREFIJO-${dir%?}-$POSTFIJO.zip"
-                aws lambda update-function-code --region $REGION --function-name $LAMDAFUNCTION --s3-bucket $BUCKET --s3-key "$PREFIJO-${dir%?}-$POSTFIJO.zip"
-
+                for dir in */; do
+                  ls
+                  echo "$dir"
+                  echo "$PREFIJO-${dir%?}-$POSTFIJO.zip"
+                  aws lambda update-function-code --region $REGION --function-name $LAMDAFUNCTION --s3-bucket $BUCKET --s3-key "$PREFIJO-${dir%?}-$POSTFIJO.zip"
+                done
