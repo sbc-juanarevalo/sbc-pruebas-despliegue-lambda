@@ -8,6 +8,7 @@ env:
   PREFIJO: sbc-autodamage-dev
   POSTFIJO: lambda
   BUCKET: sbc-autodamage-dev-build-lambdas-bucket
+  LAMBDAFUNCTION: JuanFelipePruebas
   REGION: us-east-1
     
 jobs:
@@ -17,8 +18,7 @@ jobs:
         runs-on: ubuntu-latest
         env:
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_DEVELOP }}
-            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEVELOP }}
-            REGION: ${{ secrets.REGION_DEVELOP }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEVELOP }}            
  
         steps:
           - name: Checkout Code
@@ -46,40 +46,38 @@ jobs:
                   cd ..
                 done
 
-          - name: Upload Lambdas
+          - name: Upload Lambdas to S3
+            id: Upload_Lambdas_to_S3
             run:  |
-              for dir in */; do
-                echo "----"
-                echo "$dir"
-                cd $dir
-                aws s3 --region us-east-1 cp "$PREFIJO-${dir%?}-$POSTFIJO.zip" s3://$BUCKET
-              done
+                for dir in */; do
+                  echo "----"
+                  echo "$dir"
+                  cd $dir
+                  aws s3 --region $REGION cp "$PREFIJO-${dir%?}-$POSTFIJO.zip" s3://$BUCKET
+                done
+              
+    
+          - name: Update Lambda Code from S3
+            id: Update_lambda_code_from_S3
+            run: |                
+                for dir in */; do                
+                  aws lambda update-function-code --region $REGION --function-name $LAMBDAFUNCTION --s3-bucket $BUCKET --s3-key "$PREFIJO-${dir%?}-$POSTFIJO.zip"
+                  sleep 5s
+                done
 
-          - name: Deploy Lambdas
-            run:  |
-              for dir in */; do
-                echo "----"
-                echo "$dir"
-                aws lambda update-function-code \
-                  --region $REGION  \
-                  --function-name "$PREFIJO-${dir%?}-lambda" \
-                  --s3-bucket $BUCKET \
-                  --s3-key "$PREFIJO-${dir%?}-$POSTFIJO.zip"
-              done
-
-          # - name: Update Configuration Lambda
-          #   run:  |
-          #       for dir in */; do
-          #         echo "----"
-          #         echo "$dir"
-          #         cd $dir
-          #         aws lambda update-function-configuration \
-          #           --region "us-east-1" \
-          #           --function-name "sbc-autodamage-dev-${dir%?}-lambda" \
-          #           --environment Variables="{VAR1=variable_value, VAR2=variable_value}"
-          #       done
-  
-  
+          - name: Update Lambda Configuration
+            id: Update_lambda_configuration
+            run: |     
+                AWS_COMMAND="aws lambda update-function-configuration --region $REGION --function-name $LAMBDAFUNCTION"
+                while IFS= read -r line; do           
+                  if [ -n "$line" ]; then                  
+                    AWS_COMMAND="$AWS_COMMAND $line"
+                  fi
+                done < login/config/configlambda.txt                          
+                echo "Ejecutando comando= $AWS_COMMAND"       
+                $AWS_COMMAND
+                          
+                    
                
   
     

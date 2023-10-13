@@ -16,8 +16,7 @@ jobs:
         runs-on: ubuntu-latest
         env:
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_DEVELOP }}
-            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEVELOP }}
-            #REGION: ${{ secrets.REGION_DEVELOP }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEVELOP }}            
  
         steps:
           - name: Checkout Code
@@ -29,10 +28,7 @@ jobs:
           - name: Update Python AWS Cli
             run:  python3 -m pip install --user awscli
 
-
-          
-                
-
+ 
           - name: Package Lambdas to zip
             id: Package_Lambdas
             run:  |
@@ -57,7 +53,7 @@ jobs:
                   echo "----"
                   echo "$dir"
                   cd $dir
-                  aws s3 --region $REGION cp "$PREFIJO-${dir%?}-$POSTFIJO.zip" s3://$BUCKET
+                  #aws s3 --region $REGION cp "$PREFIJO-${dir%?}-$POSTFIJO.zip" s3://$BUCKET
                 done
           
 
@@ -65,23 +61,21 @@ jobs:
             id: Update_lambda_code_from_S3
             run: |                
                 for dir in */; do                
-                  aws lambda update-function-code --region $REGION --function-name $LAMBDAFUNCTION --s3-bucket $BUCKET --s3-key "$PREFIJO-${dir%?}-$POSTFIJO.zip"
+                  #aws lambda update-function-code --region $REGION --function-name $LAMBDAFUNCTION --s3-bucket $BUCKET --s3-key "$PREFIJO-${dir%?}-$POSTFIJO.zip"
                   sleep 5s
                 done
 
           - name: Update Lambda Configuration
             id: Update_lambda_configuration
             run: | 
-
                 AWS_COMMAND="aws lambda update-function-configuration --region $REGION --function-name $LAMBDAFUNCTION"
                 while IFS= read -r line; do           
                   if [ -n "$line" ]; then                  
                     AWS_COMMAND="$AWS_COMMAND $line"
                   fi
-                done < login/config/configlambda.txt 
-                          
+                done < login/config/configlambda.txt                           
                 echo "Ejecutando comando= $AWS_COMMAND"       
-                $AWS_COMMAND
+                #$AWS_COMMAND
                       
                 
 
