@@ -73,7 +73,7 @@ jobs:
             id: Update_lambda_configuration
             run: | 
 
-                AWS_COMMAND="aws lambda update-function-configuration --function-name $LAMBDAFUNCTION"
+                AWS_COMMAND="aws lambda update-function-configuration --region $REGION --function-name $LAMBDAFUNCTION"
                 while IFS= read -r line; do           
                   if [ -n "$line" ]; then                  
                     AWS_COMMAND="$AWS_COMMAND $line"
