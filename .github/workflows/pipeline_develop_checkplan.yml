@@ -67,6 +67,7 @@ jobs:
           - name: Update Lambda Configuration
             id: Update_lambda_configuration
             run: |
+                echo "$dir"
                 echo "antes"
                 ls
                 cd login
