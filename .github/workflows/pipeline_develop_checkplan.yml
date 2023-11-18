@@ -73,10 +73,11 @@ jobs:
                 cd login/config                              
                 mkdir -p "lambdas_temp"
                 ls
-                cat "config.yml" | yq > config.json
-                cat config.json
-                cantidad_lambdas=$(jq '.lambdas | length' config.json)
-                echo "cantidad lambdas $cantidad_lambdas"
+                cat "config.yml" | yq
+                #cat "config.yml" | yq > config.json
+                #cat config.json
+                #cantidad_lambdas=$(jq '.lambdas | length' config.json)
+                #echo "cantidad lambdas $cantidad_lambdas"
                 
                 #for ((i = 0; i < $cantidad_lambdas; i++)); do
                 #        echo "creado archivo json $i"
