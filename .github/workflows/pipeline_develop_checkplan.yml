@@ -71,8 +71,10 @@ jobs:
             id: Update_lambda_configuration
             run: |
                 ls
-                #cd login/config                
-                #mkdir -p "lambdas_temp"
+                cd login/config
+                ls               
+                mkdir -p "lambdas_temp"
+                ls
                 #cat "config.yml" | yq > config.json
                 #cantidad_lambdas=$(jq '.lambdas | length' config.json)
                 #echo "cantidad lambdas $cantidad_lambdas"
