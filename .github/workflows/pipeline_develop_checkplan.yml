@@ -74,7 +74,7 @@ jobs:
                 mkdir -p "lambdas_temp"
                 ls
                 cat "config.yml" | yq > config.json
-                ls
+                cat config.json
                 #cantidad_lambdas=$(jq '.lambdas | length' config.json)
                 #echo "cantidad lambdas $cantidad_lambdas"
                 
