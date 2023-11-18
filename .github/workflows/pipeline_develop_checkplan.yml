@@ -69,8 +69,7 @@ jobs:
 
           - name: Update Lambda Configuration
             id: Update_lambda_configuration
-            run: |
-                             
+            run: |                             
                 cd login/config                              
                 mkdir -p "lambdas_temp"
                 ls
