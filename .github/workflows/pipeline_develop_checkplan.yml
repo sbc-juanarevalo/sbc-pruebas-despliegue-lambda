@@ -74,7 +74,7 @@ jobs:
                 mkdir -p "lambdas_temp"
                 ls
                 sudo apt install libghc-yaml-dev
-                yaml2json file.yaml                
+                yaml2json config.yml                
                 #cat "config.yml" | yq > config.json
                 #cat config.json
                 #cantidad_lambdas=$(jq '.lambdas | length' config.json)
