@@ -73,8 +73,10 @@ jobs:
                 cd login/config                
                 mkdir -p "lambdas_temp"
                 cat "config.yml" | yq > config.json
+                cantidad_lambdas=$(jq '.lambdas | length' config.json)
+                echo "cantidad lambdas $cantidad_lambdas"
                 
-                for ((i = 0; i < $(jq '.lambdas | length' config.json); i++)); do
+                for ((i = 0; i < $cantidad_lambdas; i++)); do
                         echo "creado archivo json $i"
                         cat config.json | jq '.lambdas['$i']' > "lambdas_temp/lambda_$i.json"
                         aws lambda update-function-configuration --cli-input-json file://lambdas_temp/lambda_$i.json
