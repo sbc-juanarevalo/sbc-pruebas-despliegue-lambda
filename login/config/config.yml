@@ -1,19 +1,19 @@
-version: 1
-region: us-east-1
-handler: "src/index.handler"
-memory: 512
-timeout: 60
+version: "1"
 
-stacks:
-  - stack: "dev"
-    environment:
-      - PROFILE_ACTIVE: "dev"
-      - CITY_TABLE: "sbc-autodamage-dev-user-dynamodb"
-  - stack: "stg"
-    environment:
-      - PROFILE_ACTIVE: "stg"
-      - CITY_TABLE: "sbc-autodamage-stg-user-dynamodb"
-  - stack: "pro"
-    environment:
-      - PROFILE_ACTIVE: "pro"
-      - CITY_TABLE: "sbc-autodamage-pro-user-dynamodb"
+region: "us-east-1" # AWS Region where the lambda run
+
+apiGW: # If you are using AWS API Gateway
+stage: "stg" # Stage where you can publish the AWS API Gateway config paths
+
+lambdas:
+        - FunctionName: 'JuanFelipePruebas' # [REQUIRED] The name of the Lambda function.
+          Environment: # Environment variables that are accessible from function code during execution
+            Variables:  # Environment variable key-value pairs.
+              clave1: 'valor1actualizadoGithub'
+              clave2: 'valor2actualizado1Github'
+
+        - FunctionName: 'JuanFelipePruebas2' # [REQUIRED] The name of the Lambda function.
+          Environment: # Environment variables that are accessible from function code during execution
+            Variables:  # Environment variable key-value pairs.
+              clave1: 'valorunoactualizado2Github'
+              clave2: 'valordosactualizado2Github'
