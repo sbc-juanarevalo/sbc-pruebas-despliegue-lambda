@@ -70,12 +70,12 @@ jobs:
           - name: Update Lambda Configuration
             id: Update_lambda_configuration
             run: |
-                sudo wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/local/bin/yq
-                sudo chmod +x /usr/local/bin/yq                
+                             
                 cd login/config                              
                 mkdir -p "lambdas_temp"
                 ls
-                cat "config.yml" | yq
+                sudo apt install libghc-yaml-dev
+                yaml2json file.yaml                
                 #cat "config.yml" | yq > config.json
                 #cat config.json
                 #cantidad_lambdas=$(jq '.lambdas | length' config.json)
