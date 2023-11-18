@@ -70,11 +70,12 @@ jobs:
           - name: Update Lambda Configuration
             id: Update_lambda_configuration
             run: |
-                cd login/config                
-                mkdir -p "lambdas_temp"
-                cat "config.yml" | yq > config.json
-                cantidad_lambdas=$(jq '.lambdas | length' config.json)
-                echo "cantidad lambdas $cantidad_lambdas"
+                ls
+                #cd login/config                
+                #mkdir -p "lambdas_temp"
+                #cat "config.yml" | yq > config.json
+                #cantidad_lambdas=$(jq '.lambdas | length' config.json)
+                #echo "cantidad lambdas $cantidad_lambdas"
                 
                 #for ((i = 0; i < $cantidad_lambdas; i++)); do
                 #        echo "creado archivo json $i"
