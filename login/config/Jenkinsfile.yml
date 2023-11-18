@@ -1,0 +1,128 @@
+version: "1"
+
+region: "us-east-2" # AWS Region where the lambda run
+
+apiGW: # If you are using AWS API Gateway
+  stage: "stg" # Stage where you can publish the AWS API Gateway config paths
+
+lambdas:
+  - name: "legal-text"
+    subPackage: "legal-text"
+    handler: "src/index.handler"
+    memory: 192
+    timeout: 60
+    runtime: nodejs12.x
+    environment:
+      - PORT: "8080"
+    stacks:
+      - stack: "dev"
+        environment:
+          - PROFILE_ACTIVE: "dev"
+
+      - stack: "stg"
+        environment:
+          - PROFILE_ACTIVE: "stg"
+
+      - stack: "pro"
+        memory: 512
+        timeout: 90
+        environment:
+          - PROFILE_ACTIVE: "pro"
+
+  - name: "vehicle-brand"
+    subPackage: "vehicle-brand"
+    handler: "src/index.handler"
+    memory: 192
+    timeout: 60
+    runtime: nodejs12.x
+    environment:
+      - PORT: "8080"
+    stacks:
+      - stack: "dev"
+        environment:
+          - PROFILE_ACTIVE: "dev"
+
+      - stack: "stg"
+        environment:
+          - PROFILE_ACTIVE: "stg"
+
+      - stack: "pro"
+        memory: 512
+        timeout: 90
+        environment:
+          - PROFILE_ACTIVE: "pro"
+
+  - name: "utils-parameter-database"
+    subPackage: "utils-parameter-database"
+    handler: "src/index.handler"
+    memory: 192
+    timeout: 60
+    runtime: nodejs12.x
+    environment:
+      - PORT: "8080"
+    stacks:
+      - stack: "dev"
+        environment:
+          - PROFILE_ACTIVE: "dev"
+
+      - stack: "stg"
+        environment:
+          - PROFILE_ACTIVE: "stg"
+
+      - stack: "pro"
+        memory: 512
+        timeout: 90
+        environment:
+          - PROFILE_ACTIVE: "pro"
+
+  - name: "util-city"
+    subPackage: "util-city"
+    handler: "src/index.handler"
+    memory: 192
+    timeout: 60
+    runtime: nodejs14.x
+    environment:
+      - PORT: "8080"
+    stacks:
+      - stack: "dev"
+        environment:
+          - PROFILE_ACTIVE: "dev"
+          - TABLENAME_CITY: "bb-occiauto-dev-city"
+
+      - stack: "stg"
+        environment:
+          - PROFILE_ACTIVE: "stg"
+          - TABLENAME_CITY: "bb-occiauto-stg-city"
+
+      - stack: "pro"
+        memory: 512
+        timeout: 90
+        environment:
+          - PROFILE_ACTIVE: "pro"
+          - TABLENAME_CITY: "bb-occiauto-pro-city"
+
+  - name: "util-currency"
+    subPackage: "util-currency"
+    handler: "src/index.handler"
+    memory: 192
+    timeout: 60
+    runtime: nodejs14.x
+    environment:
+      - PORT: "8080"
+    stacks:
+      - stack: "dev"
+        environment:
+          - PROFILE_ACTIVE: "dev"
+          - TABLENAME_CURRENCY: "bb-occiauto-dev-currency"
+
+      - stack: "stg"
+        environment:
+          - PROFILE_ACTIVE: "stg"
+          - TABLENAME_CURRENCY: "bb-occiauto-stg-currency"
+
+      - stack: "pro"
+        memory: 512
+        timeout: 90
+        environment:
+          - PROFILE_ACTIVE: "pro"
+          - TABLENAME_CURRENCY: "bb-occiauto-pro-currency"
