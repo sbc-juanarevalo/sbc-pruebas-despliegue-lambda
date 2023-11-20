@@ -7,6 +7,7 @@ stage: "stg" # Stage where you can publish the AWS API Gateway config paths
 
 lambdas:
         - FunctionName: 'JuanFelipePruebas' # [REQUIRED] The name of the Lambda function.
+          MemorySize: 256
           Environment: # Environment variables that are accessible from function code during execution
             Variables:  # Environment variable key-value pairs.
               clave1: 'valor1actualizadoGithub'

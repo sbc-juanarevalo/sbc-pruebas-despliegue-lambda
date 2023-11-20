@@ -1,0 +1,37 @@
+FunctionName: ''  # [REQUIRED] The name of the Lambda function.
+Role: '' # The Amazon Resource Name (ARN) of the function's execution role.
+Handler: '' # The name of the method within your code that Lambda calls to run your function.
+Description: '' # A description of the function.
+Timeout: 0 # The amount of time (in seconds) that Lambda allows a function to run before stopping it.
+MemorySize: 0 # The amount of memory available to the function at runtime.
+VpcConfig: # For network connectivity to Amazon Web Services resources in a VPC, specify a list of security groups and subnets in the VPC.
+  SubnetIds:  # A list of VPC subnet IDs.
+  - ''
+  SecurityGroupIds: # A list of VPC security group IDs.
+  - ''
+  Ipv6AllowedForDualStack: true # Allows outbound IPv6 traffic on VPC functions that are connected to dual-stack subnets.
+Environment: # Environment variables that are accessible from function code during execution.
+  Variables:  # Environment variable key-value pairs.
+    KeyName: ''
+Runtime: nodejs # The identifier of the function's runtime. Valid values are: nodejs, nodejs4.3, nodejs6.10, nodejs8.10, nodejs10.x, nodejs12.x, nodejs14.x, nodejs16.x, java8, java8.al2, java11, python2.7, python3.6, python3.7, python3.8, python3.9, dotnetcore1.0, dotnetcore2.0, dotnetcore2.1, dotnetcore3.1, dotnet6, nodejs4.3-edge, go1.x, ruby2.5, ruby2.7, provided, provided.al2, nodejs18.x, python3.10, java17, ruby3.2, python3.11.
+DeadLetterConfig: # A dead-letter queue configuration that specifies the queue or topic where Lambda sends asynchronous events when they fail processing.
+  TargetArn: ''  # The Amazon Resource Name (ARN) of an Amazon SQS queue or Amazon SNS topic.
+KMSKeyArn: '' # The ARN of the Key Management Service (KMS) customer managed key that's used to encrypt your function's environment variables.
+TracingConfig: # Set Mode to Active to sample and trace a subset of incoming requests with X-Ray.
+  Mode: Active  # The tracing mode. Valid values are: Active, PassThrough.
+RevisionId: '' # Update the function only if the revision ID matches the ID that's specified.
+Layers: # A list of function layers to add to the function's execution environment.
+- ''
+FileSystemConfigs: # Connection settings for an Amazon EFS file system.
+- Arn: ''  # [REQUIRED] The Amazon Resource Name (ARN) of the Amazon EFS access point that provides access to the file system.
+  LocalMountPath: '' # [REQUIRED] The path where the function can access the file system, starting with /mnt/.
+ImageConfig: #  Container image configuration values that override the values in the container image Docker file.
+  EntryPoint:  # Specifies the entry point to their application, which is typically the location of the runtime executable.
+  - ''
+  Command: # Specifies parameters that you want to pass in with ENTRYPOINT.
+  - ''
+  WorkingDirectory: '' # Specifies the working directory.
+EphemeralStorage: # The size of the function's /tmp directory in MB.
+  Size: 0  # [REQUIRED] The size of the function's /tmp directory.
+SnapStart: # The function's SnapStart setting.
+  ApplyOn: PublishedVersions  # Set to PublishedVersions to create a snapshot of the initialized execution environment when you publish a function version. Valid values are: PublishedVersions, None.
