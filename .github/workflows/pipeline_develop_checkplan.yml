@@ -81,7 +81,7 @@ jobs:
                 for ((i = 0; i < $cantidad_lambdas; i++)); do
                         echo "creado archivo json $i"
                         cat config.json | jq '.lambdas['$i']' > "lambdas_temp/lambda_$i.json"
-                        aws lambda update-function-configuration --cli-input-json file://lambdas_temp/lambda_$i.json
+                        aws lambda update-function-configuration --region $REGION --cli-input-json file://lambdas_temp/lambda_$i.json
                 done                
 
           #- name: Update Lambda Configuration
