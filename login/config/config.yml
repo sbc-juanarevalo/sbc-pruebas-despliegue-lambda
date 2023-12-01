@@ -6,14 +6,20 @@ apiGW: # If you are using AWS API Gateway
 stage: "stg" # Stage where you can publish the AWS API Gateway config paths
 
 lambdas:
-        - FunctionName: 'JuanFelipePruebas' # [REQUIRED] The name of the Lambda function.
+        - FunctionName: 'JuanFelipePruebas' # [REQUIRED] The name of the Lambda function.          
           Environment: # Environment variables that are accessible from function code during execution
             Variables:  # Environment variable key-value pairs.
-              clave1: 'valor1actualizadoGithub'
-              clave2: 'valor2actualizado1Github'
+              clave1: 'valor1actualizadoGithub2'
+              clave2: 'valor2actualizado1Github2'
 
         - FunctionName: 'JuanFelipePruebas2' # [REQUIRED] The name of the Lambda function.
           Environment: # Environment variables that are accessible from function code during execution
             Variables:  # Environment variable key-value pairs.
-              clave1: 'valorunoactualizado2Github'
-              clave2: 'valordosactualizado2Github'
+              clave1: 'valorunoactualizado2Github2'
+              clave2: 'valordosactualizado2Github2'
+
+        - FunctionName: 'JuanFelipePruebas3' # [REQUIRED] The name of the Lambda function.
+          Environment: # Environment variables that are accessible from function code during execution
+            Variables:  # Environment variable key-value pairs.
+              clave1: 'valor1Pruebas3'
+              clave2: 'valor2Pruebas3'
