@@ -38,7 +38,7 @@ jobs:
                     cd $dir
                     mkdir -p "$PREFIJO-${dir%?}-$POSTFIJO"
                     cd src/JuanFelipePruebas
-                    pip install -r ../config/requirements.txt -t ../"$PREFIJO-${dir%?}-$POSTFIJO"
+                    pip install -r ../../config/requirements.txt -t ../"$PREFIJO-${dir%?}-$POSTFIJO"
                     cd ..
                     cp -r src/JuanFelipePruebas/* "$PREFIJO-${dir%?}-$POSTFIJO"
                     cd "$PREFIJO-${dir%?}-$POSTFIJO"
