@@ -37,10 +37,10 @@ jobs:
                     echo "$dir"
                     cd $dir
                     mkdir -p "$PREFIJO-${dir%?}-$POSTFIJO"
-                    cd src/JuanFelipePruebas
-                    pip install -r ../../config/requirements.txt -t ../"$PREFIJO-${dir%?}-$POSTFIJO"
+                    cd src
+                    pip install -r ../config/requirements.txt -t ../"$PREFIJO-${dir%?}-$POSTFIJO"
                     cd ..
-                    cp -r src/JuanFelipePruebas/* "$PREFIJO-${dir%?}-$POSTFIJO"
+                    cp -r src/* "$PREFIJO-${dir%?}-$POSTFIJO"
                     cd "$PREFIJO-${dir%?}-$POSTFIJO"
                     zip -r ../"$PREFIJO-${dir%?}-$POSTFIJO.zip" .
                     cd ..
