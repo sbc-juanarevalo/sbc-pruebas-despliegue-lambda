@@ -33,17 +33,35 @@ jobs:
             id: Package_Lambdas
             run:  |
                   for dir in */; do
-                    echo "----"
+                    echo "1----"
                     echo "$dir"
                     cd $dir
+                    echo "2----"
+                    ls
                     mkdir -p "$PREFIJO-${dir%?}-$POSTFIJO"
+                    echo "3----"
+                    ls
                     cd src
+                    echo "4----"
+                    ls
                     pip install -r ../config/requirements.txt -t ../"$PREFIJO-${dir%?}-$POSTFIJO"
+                    echo "5----"
+                    ls
                     cd ..
+                    echo "6----"
+                    ls
                     cp -r src/* "$PREFIJO-${dir%?}-$POSTFIJO"
+                    echo "7----"
+                    ls
                     cd "$PREFIJO-${dir%?}-$POSTFIJO"
+                    echo "8----"
+                    ls
                     zip -r ../"$PREFIJO-${dir%?}-$POSTFIJO.zip" .
+                    echo "9----"
+                    ls
                     cd ..
+                    echo "10----"
+                    ls
                   done
                   
           - name: Upload Lambdas to S3
