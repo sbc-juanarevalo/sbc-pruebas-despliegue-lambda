@@ -8,6 +8,7 @@ env:
   POSTFIJO: deploy-lambda
   BUCKET: bucket-pruebas-juanfelipe
   LAMBDAFUNCTION: JuanFelipePruebas
+  LIMITEDEPESOLAMBDA: 1048576 # Tamaño límite en bytes (1 MB = 1048576 bytes)
   REGION: us-east-1
 
 jobs:
@@ -62,7 +63,17 @@ jobs:
                     cd ..
                     echo "10----"
                     ls
-                    du -h $PREFIJO-${dir%?}-$POSTFIJO.zip
+                    pesolambda=$(du -b "$PREFIJO-${dir%?}-$POSTFIJO.zip" | cut -f1)
+                    echo $pesolambda
+                    if [ "$pesolambda" -lt "$LIMITEDEPESOLAMBDA" ]; then
+                      echo "El archivo pesa menos."
+                    else
+                      echo "El archivo pesa más."
+                    fi
+
+
+
+                    
                   done
                   
           - name: Upload Lambdas to S3
