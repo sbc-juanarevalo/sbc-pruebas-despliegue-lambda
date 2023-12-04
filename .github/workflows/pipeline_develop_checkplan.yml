@@ -53,7 +53,7 @@ jobs:
                   echo "----"
                   echo "$dir"
                   cd $dir
-                  #aws s3 --region $REGION cp "$PREFIJO-${dir%?}-$POSTFIJO.zip" s3://$BUCKET
+                  aws s3 --region $REGION cp "$PREFIJO-${dir%?}-$POSTFIJO.zip" s3://$BUCKET
                 done
           
 
@@ -61,7 +61,7 @@ jobs:
             id: Update_lambda_code_from_S3
             run: |                
                 for dir in */; do                
-                  #aws lambda update-function-code --region $REGION --function-name $LAMBDAFUNCTION --s3-bucket $BUCKET --s3-key "$PREFIJO-${dir%?}-$POSTFIJO.zip"
+                  aws lambda update-function-code --region $REGION --function-name $LAMBDAFUNCTION --s3-bucket $BUCKET --s3-key "$PREFIJO-${dir%?}-$POSTFIJO.zip"
                   sleep 5s
                 done
 
