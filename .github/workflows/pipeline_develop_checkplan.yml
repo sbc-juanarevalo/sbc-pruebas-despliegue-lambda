@@ -62,6 +62,7 @@ jobs:
                     cd ..
                     echo "10----"
                     ls
+                    du -h $PREFIJO-${dir%?}-$POSTFIJO.zip
                   done
                   
           - name: Upload Lambdas to S3
