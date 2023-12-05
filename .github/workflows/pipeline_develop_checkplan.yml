@@ -105,11 +105,11 @@ jobs:
                 cantidad_lambdas=$(jq '.lambdas | length' config.json)
                 echo "cantidad lambdas $cantidad_lambdas"
                 
-                for ((i = 0; i < $cantidad_lambdas; i++)); do
-                        echo "creado archivo json $i"
-                        cat config.json | jq '.lambdas['$i']' > "lambdas_temp/lambda_$i.json"
-                        aws lambda update-function-configuration --region $REGION --cli-input-json file://lambdas_temp/lambda_$i.json
-                done
+                #for ((i = 0; i < $cantidad_lambdas; i++)); do
+                        #echo "creado archivo json $i"
+                        #cat config.json | jq '.lambdas['$i']' > "lambdas_temp/lambda_$i.json"
+                        #aws lambda update-function-configuration --region $REGION --cli-input-json file://lambdas_temp/lambda_$i.json
+                #done
 
                 for ((i = 0; i < $(jq '.lambdas | length' config.json); i++)); do
                   resultado=$(jq -r '.lambdas['$i']' config.json)
