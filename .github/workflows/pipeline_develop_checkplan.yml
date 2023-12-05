@@ -44,6 +44,7 @@ jobs:
                     nombre_archivo="${subcarpeta%/}.zip"
                     zip -r "$nombre_archivo" "$subcarpeta"
                     echo "el nombre del archivo es $nombre_archivo"
+                    aws s3 --region $REGION cp "$nombre_archivo" s3://$BUCKET
                   done
                   echo "4----"
                   ls
