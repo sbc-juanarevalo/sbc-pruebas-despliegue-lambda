@@ -80,7 +80,7 @@ jobs:
                   echo "----"
                   echo "$dir"
                   cd $dir
-                  aws s3 --region $REGION cp "$PREFIJO-${dir%?}-$POSTFIJO.zip" s3://$BUCKET
+                  #aws s3 --region $REGION cp "$PREFIJO-${dir%?}-$POSTFIJO.zip" s3://$BUCKET
                 done
           
 
@@ -88,7 +88,7 @@ jobs:
             id: Update_lambda_code_from_S3
             run: |                
                 for dir in */; do                
-                  aws lambda update-function-code --region $REGION --function-name $LAMBDAFUNCTION --s3-bucket $BUCKET --s3-key "$PREFIJO-${dir%?}-$POSTFIJO.zip"
+                  #aws lambda update-function-code --region $REGION --function-name $LAMBDAFUNCTION --s3-bucket $BUCKET --s3-key "$PREFIJO-${dir%?}-$POSTFIJO.zip"
                   sleep 5s
                 done
 
@@ -109,6 +109,20 @@ jobs:
                         echo "creado archivo json $i"
                         cat config.json | jq '.lambdas['$i']' > "lambdas_temp/lambda_$i.json"
                         aws lambda update-function-configuration --region $REGION --cli-input-json file://lambdas_temp/lambda_$i.json
+                done
+
+                for ((i = 0; i < $(jq '.lambdas | length' config.json); i++)); do
+                  resultado=$(jq -r '.lambdas['$i']' config.json)
+                  if echo "$resultado" | grep -q "dev" && echo "$resultado" | grep -q "stg" && echo "$resultado" | grep -q "pro"; then
+                    echo "El resultado contiene 'dev', 'stg' y 'pro'."
+                    echo "creado archivo json $i"
+                    cat config.json | jq '.lambdas['$i'].'$(jq '.stage' config.json)'' > "lambdas_temp/lambda_$i.json"
+                    jq -r '. + {"FunctionName": '$(jq '.lambdas['$i'].FunctionName' config.json)'}' "lambdas_temp/lambda_$i.json" > "archivo_temporal.json" && mv "archivo_temporal.json" "lambdas_temp/lambda_$i.json"
+                    #aws lambda update-function-configuration --cli-input-json file://lambdas_temp/lambda_$i.json
+                  else
+                    echo "La lambda '$(jq '.lambdas['$i'].FunctionName' config.json)' no contiene los tres ambientes."
+                    break
+                  fi
                 done                
 
           #- name: Update Lambda Configuration
