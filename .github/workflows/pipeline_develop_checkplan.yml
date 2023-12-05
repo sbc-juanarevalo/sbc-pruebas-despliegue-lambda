@@ -31,23 +31,16 @@ jobs:
           
           - name: Package Lambdas to zip
             id: Package_Lambdas
-            run:  |
-                  echo "1----"
-                  ls
-                  cd login
-                  echo "2----"
-                  ls
-                  cd src
-                  echo "3----"
-                  ls
+            run:  |                  
+                  cd login/src            
                   for subcarpeta in */; do
                     nombre_archivo="${subcarpeta%/}.zip"
-                    zip -r "$nombre_archivo" "$subcarpeta"
-                    echo "el nombre del archivo es $nombre_archivo"
+                    echo "${subcarpeta%/}"
+                    echo "$subcarpeta"
+                    zip -r "$nombre_archivo" "$subcarpeta"                    
                     aws s3 --region $REGION cp "$nombre_archivo" s3://$BUCKET
-                  done
-                  echo "4----"
-                  ls
+                    aws lambda update-function-code --region $REGION --function-name $subcarpeta --s3-bucket $BUCKET --s3-key "$nombre_archivo"
+                  done                 
 
 
  
