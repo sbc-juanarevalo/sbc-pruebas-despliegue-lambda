@@ -29,7 +29,7 @@ jobs:
           - name: Update Python AWS Cli
             run:  python3 -m pip install --user awscli
           
-          - name: Package Lambdas to zip
+          - name: Package Lambdas to zip && upload code
             id: Package_Lambdas
             run:  |                  
                   cd login/src 
@@ -86,24 +86,24 @@ jobs:
           #          fi                    
           #        done
                   
-          - name: Upload Lambdas to S3
-            id: Upload_Lambdas_to_S3
-            run:  |
-                for dir in */; do
-                  echo "----"
-                  echo "$dir"
-                  cd $dir
+          #- name: Upload Lambdas to S3
+          #  id: Upload_Lambdas_to_S3
+          #  run:  |
+          #      for dir in */; do
+          #        echo "----"
+          #        echo "$dir"
+          #        cd $dir
                   #aws s3 --region $REGION cp "$PREFIJO-${dir%?}-$POSTFIJO.zip" s3://$BUCKET
-                done
+          #      done
           
 
-          - name: Update Lambda Code from S3
-            id: Update_lambda_code_from_S3
-            run: |                
-                for dir in */; do                
+          #- name: Update Lambda Code from S3
+          #  id: Update_lambda_code_from_S3
+          #  run: |                
+          #      for dir in */; do                
                   #aws lambda update-function-code --region $REGION --function-name $LAMBDAFUNCTION --s3-bucket $BUCKET --s3-key "$PREFIJO-${dir%?}-$POSTFIJO.zip"
-                  sleep 5s
-                done
+          #        sleep 5s
+          #      done
 
 
 
