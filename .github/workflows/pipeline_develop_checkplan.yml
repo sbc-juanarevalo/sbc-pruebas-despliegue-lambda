@@ -43,7 +43,7 @@ jobs:
                   for subcarpeta in */; do
                     nombre_archivo="${subcarpeta%/}.zip"
                     zip -r "$nombre_archivo" "$subcarpeta"
-                    echo "el nombre del archivo es $nombre_archivo""
+                    echo "el nombre del archivo es $nombre_archivo"
                   done
                   echo "4----"
                   ls
