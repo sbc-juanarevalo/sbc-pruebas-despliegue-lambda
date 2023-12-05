@@ -3,23 +3,46 @@ version: "1"
 region: "us-east-1" # AWS Region where the lambda run
 
 apiGW: # If you are using AWS API Gateway
-stage: "stg" # Stage where you can publish the AWS API Gateway config paths
+stage: "pro" # Stage where you can publish the AWS API Gateway config paths
 
 lambdas:
-        - FunctionName: 'JuanFelipePruebas' # [REQUIRED] The name of the Lambda function.          
-          Environment: # Environment variables that are accessible from function code during execution
-            Variables:  # Environment variable key-value pairs.
-              clave1: 'valor1actualizadoGithub2'
-              clave2: 'valor2actualizado1Github2'
+
+        - FunctionName: 'JuanFelipePruebas' # [REQUIRED] The name of the Lambda function.
+          dev:
+                  Environment:
+                          Variables:
+
+                                  clave1: 'valor1DevPruebas1Github'
+                                  clave2: 'valor2DevPruebas1Github'
+          stg:
+                  Environment:
+                          Variables:
+
+                                  clave1: 'valor1StgPruebas1Github'
+                                  clave2: 'valor2StgPruebas1Github'
+          pro:
+                  Environment:
+                          Variables:
+
+                                  clave1: 'valor1ProPruebas1Github'
+                                  clave2: 'valor2ProPruebas1Github'                        
 
         - FunctionName: 'JuanFelipePruebas2' # [REQUIRED] The name of the Lambda function.
-          Environment: # Environment variables that are accessible from function code during execution
-            Variables:  # Environment variable key-value pairs.
-              clave1: 'valorunoactualizado2Github2'
-              clave2: 'valordosactualizado2Github2'
+          dev:
+                  Environment:
+                          Variables:
 
-        - FunctionName: 'JuanFelipePruebas3' # [REQUIRED] The name of the Lambda function.
-          Environment: # Environment variables that are accessible from function code during execution
-            Variables:  # Environment variable key-value pairs.
-              clave1: 'valor1Pruebas3'
-              clave2: 'valor2Pruebas3'
+                                  clave1: 'valor1DevPruebas2Github'
+                                  clave2: 'valor2DevPruebas2Github'
+          stg:
+                  Environment:
+                          Variables:
+
+                                  clave1: 'valor1StgPruebas2Github'
+                                  clave2: 'valor2StgPruebas2Github'
+          pro:
+                  Environment:
+                          Variables:
+
+                                  clave1: 'valor1ProPruebas2Github'
+                                  clave2: 'valor2ProPruebas2Github'
