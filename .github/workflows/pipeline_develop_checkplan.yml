@@ -40,6 +40,12 @@ jobs:
                   cd src
                   echo "3----"
                   ls
+                  for subcarpeta in */; do
+                    nombre_archivo="${subcarpeta%/}.zip"
+                    zip -r "$nombre_archivo" "$subcarpeta"
+                  done
+                  echo "4----"
+                  ls
 
 
  
