@@ -31,7 +31,14 @@ jobs:
           
           - name: Package Lambdas to zip
             id: Package_Lambdas
-            run:  ls
+            run:  echo "1----"
+                  ls
+                  cd login
+                  echo "2----"
+                  ls
+                  cd src
+                  echo "3----"
+                  ls
 
 
  
