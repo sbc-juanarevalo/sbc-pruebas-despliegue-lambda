@@ -29,9 +29,17 @@ jobs:
           - name: Update Python AWS Cli
             run:  python3 -m pip install --user awscli
           
-          - name: Package Lambdas to zip
+          - name: Package Lambdas to zip && upload code
             id: Package_Lambdas
-            run:  ls
+            run:  |                  
+                  cd login/src 
+                  for subcarpeta in */; do
+                    nombre_archivo="${subcarpeta%/}.zip"
+                    (cd "$subcarpeta" && zip -r "../$nombre_archivo" .)
+                    aws s3 --region $REGION cp "$nombre_archivo" s3://$BUCKET
+                    aws lambda update-function-code --region $REGION --function-name "${subcarpeta%/}" --s3-bucket $BUCKET --s3-key "$nombre_archivo"
+                  done          
+                                  
 
  
           #- name: Package Lambdas to zip
@@ -78,24 +86,24 @@ jobs:
           #          fi                    
           #        done
                   
-          - name: Upload Lambdas to S3
-            id: Upload_Lambdas_to_S3
-            run:  |
-                for dir in */; do
-                  echo "----"
-                  echo "$dir"
-                  cd $dir
-                  aws s3 --region $REGION cp "$PREFIJO-${dir%?}-$POSTFIJO.zip" s3://$BUCKET
-                done
+          #- name: Upload Lambdas to S3
+          #  id: Upload_Lambdas_to_S3
+          #  run:  |
+          #      for dir in */; do
+          #        echo "----"
+          #        echo "$dir"
+          #        cd $dir
+                  #aws s3 --region $REGION cp "$PREFIJO-${dir%?}-$POSTFIJO.zip" s3://$BUCKET
+          #      done
           
 
-          - name: Update Lambda Code from S3
-            id: Update_lambda_code_from_S3
-            run: |                
-                for dir in */; do                
-                  aws lambda update-function-code --region $REGION --function-name $LAMBDAFUNCTION --s3-bucket $BUCKET --s3-key "$PREFIJO-${dir%?}-$POSTFIJO.zip"
-                  sleep 5s
-                done
+          #- name: Update Lambda Code from S3
+          #  id: Update_lambda_code_from_S3
+          #  run: |                
+          #      for dir in */; do                
+                  #aws lambda update-function-code --region $REGION --function-name $LAMBDAFUNCTION --s3-bucket $BUCKET --s3-key "$PREFIJO-${dir%?}-$POSTFIJO.zip"
+          #        sleep 5s
+          #      done
 
 
 
