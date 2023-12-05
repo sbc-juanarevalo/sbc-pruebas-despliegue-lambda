@@ -113,7 +113,7 @@ jobs:
                     echo "creado archivo json $i"
                     cat config.json | jq '.lambdas['$i'].'$(jq '.stage' config.json)'' > "lambdas_temp/lambda_$i.json"
                     jq -r '. + {"FunctionName": '$(jq '.lambdas['$i'].FunctionName' config.json)'}' "lambdas_temp/lambda_$i.json" > "archivo_temporal.json" && mv "archivo_temporal.json" "lambdas_temp/lambda_$i.json"
-                    aws lambda update-function-configuration --cli-input-json file://lambdas_temp/lambda_$i.json
+                    aws lambda update-function-configuration --region $REGION --cli-input-json file://lambdas_temp/lambda_$i.json
                   else
                     echo "La lambda '$(jq '.lambdas['$i'].FunctionName' config.json)' no contiene los tres ambientes."
                     break
